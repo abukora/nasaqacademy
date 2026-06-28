@@ -107,7 +107,7 @@ const rawCourses = [{
   ]
 };
   {
-  id: 1,
+  id: 2,
   title: "المنتخب من كتاب التوحيد - عقيدة التوحيد الخالص",
   icon: "fa-star",
   color: "#D4AF37",
