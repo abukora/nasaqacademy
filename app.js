@@ -603,9 +603,9 @@ function renderHome() {
         ${todayBanner}
         <div class="hero">
             <h1>أكاديمية نسق للدراسات</h1>
-            <p>عميد بالأكاديمية: أ.د/أحمد النقيب</p>
             <p class="sub-meta">السلام عليكم ورحمة الله وبركاته حياكم الله الطلاب الكرام
 في برنامج تأهيل وإعداد طالب العلم المتخصص في أقل وقت</p>
+            <p>عميدالأكاديمية:أ.د/أحمد النقيب</p>
             <div class="hero-actions">
                 <a class="btn-hero btn-game" href="game.html">
                     <i class="fas fa-gamepad"></i> ابدأ المراجعة والاختبار الآن
