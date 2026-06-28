@@ -602,23 +602,24 @@ function renderHome() {
     return `
         ${todayBanner}
         <div class="hero">
-            <h1>حصون الإيمان</h1>
-            <p>المنهج الصيفي المتكامل لبناء شخصية ابنك المسلمة</p>
-            <p class="sub-meta">📚 10 كراسات &nbsp;|&nbsp; 130 درساً &nbsp;|&nbsp; 45 يوماً &nbsp;|&nbsp; للفئة 9-15 سنة</p>
+            <h1>أكاديمية نسق للدراسات</h1>
+            <p>برنامج تأهيل وإعداد طالب العلم المتخصص في أقل وقت</p>
+            <p class="sub-meta">السلام عليكم ورحمة الله وبركاته حياكم الله الطلاب الكرام
+في برنامج تأهيل وإعداد طالب العلم المتخصص في أقل وقت</p>
             <div class="hero-actions">
                 <a class="btn-hero btn-game" href="game.html">
-                    <i class="fas fa-gamepad"></i> ابدأ السباق الآن
+                    <i class="fas fa-gamepad"></i> ابدأ المراجعة والاختبار الآن
                 </a>
                 <button class="btn-hero" onclick="navigateTo('courses')">
-                    <i class="fas fa-book-open"></i> تصفح الكراسات
+                    <i class="fas fa-book-open"></i> تصفح المنهج
                 </button>
             </div>
         </div>
 
         <div class="author-card">
             <div class="author-emblem">🛡️</div>
-            <div class="author-label">إعداد وتأليف المادة العلمية</div>
-            <div class="author-name">محمد أبو عبد الرحمن</div>
+            <div class="author-label">عميد الأكاديمية</div>
+            <div class="author-name">فضيلة الشيخ أ.د أحمد النقيب</div>
             <div class="author-dua">عفا الله عنه ووالديه والمسلمين</div>
             <div class="author-divider"></div>
             <span class="author-edition">
@@ -627,7 +628,7 @@ function renderHome() {
             </span>
         </div>
 
-        <h2 class="section-title">الكراسات العشر</h2>
+        <h2 class="section-title">االمنهج المقرر</h2>
         <div class="courses-grid">
             ${courses.map(c => {
                 const progress = getCourseProgress(c.id);
@@ -659,7 +660,7 @@ function renderHome() {
 function renderCoursesGrid() {
     const mode = localStorage.getItem(LS_MODE);
     return `
-        <h2 class="section-title">الكراسات العشر</h2>
+        <h2 class="section-title">االمنهج المقرر</h2>
         <div class="courses-grid">
             ${courses.map(c => {
                 const progress = getCourseProgress(c.id);
@@ -737,13 +738,13 @@ function renderContact() {
     return `
         <div class="author-card" style="margin-bottom:28px;">
             <div class="author-emblem">🛡️</div>
-            <div class="author-label">إعداد وتأليف المادة العلمية والمنهج</div>
-            <div class="author-name">محمد أبو عبد الرحمن</div>
+            <div class="author-label">عميد الأكاديمية</div>
+            <div class="author-name">فضيلة الشيخ أ.د أحمد النقيب</div>
             <div class="author-dua">عفا الله عنه ووالديه وجميع المسلمين</div>
             <div class="author-divider"></div>
             <span class="author-edition">
                 <i class="fas fa-book-open" style="color:#D4AF37"></i>
-                حصون الإيمان — الإصدار الأول 2026م
+                أكاديمية نسق للدراسات — الإصدار الأول 2026م
             </span>
         </div>
         <div class="contact-box">
@@ -856,7 +857,7 @@ function renderCourseDetail(courseId, lessonIndex) {
                     </button>
                     <span class="course-title">${course.title}</span>
                     <span class="course-stats"><i class="fas fa-book"></i> ${totalLessons} درس · ${progress}% مكتمل</span>
-                    <span style="font-size:0.78rem;color:var(--text-light);width:100%;text-align:center;padding-top:4px;">تأليف: محمد أبو عبد الرحمن — عفا الله عنه</span>
+                    <span style="font-size:0.78rem;color:var(--text-light);width:100%;text-align:center;padding-top:4px;">عميد الاكاديمية:  فضيلة الشيخ أ.د أحمد النقيب — عفا الله عنه</span>
                 </div>
 
                 <div class="lesson-card">
@@ -989,9 +990,9 @@ function completeLesson(event, courseId, lessonIndex, courseTitle, lessonTitle) 
     localStorage.setItem(getProgressKey(courseId, lessonIndex), 'true');
     navigateTo('course', { courseId, lessonIndex });
     const msgs = [
-        "أحسنت يا بطل! 🌟", "ممتاز! استمر! 💪",
+        "أحسنت بارك الله فيك! 🌟", "ممتاز! استمر! 💪",
         "رائع! أنت تتقدم بثبات 🚀", "ما شاء الله عليك! 👏",
-        "أنت بطل حصون الإيمان! 🏆"
+        "أحسن الله اليك وبالتوفيق! 🏆"
     ];
     showCheerMessage("🌟🌟🌟🌟🌟", msgs[Math.floor(Math.random() * msgs.length)], "لقد أتممت الدرس بنجاح، واصل رحلتك الإيمانية!");
 }
