@@ -385,23 +385,36 @@ function buildConfirmStep() {
     const startDate = document.getElementById('startDatePicker').value;
     if (!startDate) return;
 
+    // 🔄 1. حساب عدد الدروس الإجمالي تلقائياً من المصفوفة
+    const totalLessons = courses.length;
+    
+    // 🔄 2. حساب عدد الكراسات تلقائياً (يجلب الأسماء الفريدة للكراسات ويعدّها)
+    // ملاحظة: لو مصفوفتك عبارة عن نصوص فقط وليست كائنات، ضع قيمة افتراضية أو اخبرني لتعديلها
+    const uniqueNotebooks = [...new Set(courses.map(c => c.notebook || ''))].filter(Boolean);
+    const totalNotebooks = uniqueNotebooks.length || 11; // إذا لم يجد حقل الكراسة يضع 11 كخيار احتياطي
+
+    // 🎯 3. تثبيت مستهدف أيام الدراسة (مثلاً 45 يوماً)
+    const totalStudyDays = 45; 
+
     const start = new Date(startDate + 'T00:00:00');
-    // احسب تاريخ الانتهاء (45 يوماً دراسياً مع تجاهل الجمعات = ~53 يوماً تقويمياً)
     let studyCount = 0;
     const endDate = new Date(start);
-    while (studyCount < 45) {
+    
+    // حساب تاريخ الانتهاء يتكيف تلقائياً مع عدد أيام الدراسة المتغيرة لو أحببت
+    while (studyCount < totalStudyDays) {
         if (endDate.getDay() !== 5) studyCount++;
-        if (studyCount < 45) endDate.setDate(endDate.getDate() + 1);
+        if (studyCount < totalStudyDays) endDate.setDate(endDate.getDate() + 1);
     }
 
     const dayNames = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
     const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
     const fmt = d => `${dayNames[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 
-    // 1️⃣ تعديل الشرط هنا ليمتد إلى 44 (اليوم الـ 45 في البرمجة يبدأ من 0 وينتهي عند 44)
+    // حساب اليوم الدراسي الحالي ديناميكياً بناءً على السقف الجديد (totalStudyDays - 1)
     const todayStudyDay = calcStudyDay(startDate);
     let todayCoursesHtml = '';
-    if (todayStudyDay >= 0 && todayStudyDay <= 44) { 
+    
+    if (todayStudyDay >= 0 && todayStudyDay <= (totalStudyDays - 1)) { 
         const todayCourses = getPlanForDay(todayStudyDay);
         todayCoursesHtml = todayCourses.map(c =>
             `<span class="wc-lesson-chip"><i class="fas fa-book-open"></i> ${c.title}</span>`
@@ -427,7 +440,7 @@ function buildConfirmStep() {
         </div>
         <div class="wc-confirm-row">
             <span class="cr-label"><i class="fas fa-book" style="color:#1a73e8;margin-left:6px;"></i> عدد الكراسات</span>
-            <span class="cr-val">11 كراسة · 153 درساً</span> 
+            <span class="cr-val">${totalNotebooks} كراسة · ${totalLessons} درساً</span> 
         </div>
     `;
 
@@ -436,7 +449,6 @@ function buildConfirmStep() {
         ${todayCoursesHtml || '<span style="color:rgba(255,255,255,0.5);font-size:0.85rem;">لا توجد دروس مجدولة اليوم</span>'}
     `;
 }
-
 function launchFreeMode() {
     localStorage.setItem(LS_MODE, 'free');
     localStorage.setItem(LS_SETUP_DONE, '1');
