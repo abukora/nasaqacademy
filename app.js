@@ -387,16 +387,18 @@ function buildConfirmStep() {
     const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
     const fmt = d => `${dayNames[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 
-    // ما هي دروس اليوم؟ (لو البداية اليوم = اليوم الدراسي 0)
+    // 1️⃣ تعديل الشرط هنا ليمتد إلى 44 (اليوم الـ 45 في البرمجة يبدأ من 0 وينتهي عند 44)
     const todayStudyDay = calcStudyDay(startDate);
     let todayCoursesHtml = '';
-    if (todayStudyDay >= 0 && todayStudyDay <= 29) {
+    if (todayStudyDay >= 0 && todayStudyDay <= 44) { 
         const todayCourses = getPlanForDay(todayStudyDay);
         todayCoursesHtml = todayCourses.map(c =>
             `<span class="wc-lesson-chip"><i class="fas fa-book-open"></i> ${c.title}</span>`
         ).join('');
     } else if (todayStudyDay < 0) {
         todayCoursesHtml = `<span style="color:rgba(255,255,255,0.5);font-size:0.85rem;">ستبدأ دروسك يوم ${fmt(start)}</span>`;
+    } else {
+        todayCoursesHtml = `<span style="color:#2E8B57;font-size:0.85rem;font-weight:bold;"><i class="fas fa-trophy"></i> مبروك! لقد أتممت الدورة بالكامل!</span>`;
     }
 
     document.getElementById('confirmSummary').innerHTML = `
@@ -414,7 +416,7 @@ function buildConfirmStep() {
         </div>
         <div class="wc-confirm-row">
             <span class="cr-label"><i class="fas fa-book" style="color:#1a73e8;margin-left:6px;"></i> عدد الكراسات</span>
-            <span class="cr-val">10 كراسات · 130 درساً</span>
+            <span class="cr-val">11 كراسة · 153 درساً</span> 
         </div>
     `;
 
