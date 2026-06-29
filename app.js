@@ -128,13 +128,24 @@ const LS_SETUP_DONE = 'hosoon_setup_done';  // '1'
 // خطة التدريس: 30 يوم دراسي (كل يوم 3 كراسات كما في renderPlan)
 // نفس المنطق الموجود في renderPlan
 function getPlanForDay(dayIndex) {
-    // dayIndex من 0 إلى 29 (اليوم الدراسي لا التقويمي)
-    const i = dayIndex;
-    return [
-        courses[i % courses.length],
-        courses[(i + 3) % courses.length],
-        courses[(i + 6) % courses.length]
-    ];
+    // dayIndex من 0 إلى 44 (اليوم الدراسي لا التقويمي)
+    const totalDays = 45;
+    const totalCourses = courses.length; // سيتعرف تلقائياً على الـ 153 درساً مرسلة في المصفوفة
+    
+    // 1. حساب عدد الدروس الأساسية لكل يوم (153 ÷ 45 = 3 دروس)
+    const baseLessonsPerDay = Math.floor(totalCourses / totalDays); 
+    
+    // 2. حساب الفائض المتبقي الذي يجب توزيعه (153 % 45 = 18 درساً زائداً)
+    const remainder = totalCourses % totalDays; 
+    
+    // 3. معادلة ذكية لحساب نقطة البداية (Index) لدروس هذا اليوم بالتسلسل
+    const startIndex = dayIndex * baseLessonsPerDay + Math.min(dayIndex, remainder);
+    
+    // 4. حساب نقطة النهاية (هل يأخذ 3 دروس أم 4 دروس اليوم؟)
+    const endIndex = startIndex + baseLessonsPerDay + (dayIndex < remainder ? 1 : 0);
+    
+    // قطع المصفوفة وإرجاع دروس اليوم المحددة بالتوالي (مثلاً: من الدرس 0 إلى 4)
+    return courses.slice(startIndex, endIndex);
 }
 
 // تحويل تاريخ إلى string YYYY-MM-DD بالتوقيت المحلي
